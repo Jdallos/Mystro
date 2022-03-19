@@ -1,0 +1,12 @@
+.Recommendation {
+  border: 2px solid rgb(75, 224, 94);
+  padding: 0 !important;
+  background-color: rgba(0, 139, 139, 0.212);
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.Recommendation img {
+  width: 95%;
+  margin:0.1rem;
+}
