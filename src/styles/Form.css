@@ -1,0 +1,37 @@
+.Form input{
+  padding: 0.8rem 1.5rem;
+  margin: 1rem;
+  border: 3px solid mediumseagreen;
+  border-radius: 100px;
+  background-color:rgb(255, 224, 194);
+  font-size: 1.2em;
+  box-shadow: 1px 1px 2px black;
+  min-width: 40%;
+}
+
+.Form input:focus{
+  border: 3px solid peru;
+  outline: none;
+  box-shadow: 1px 1px 5px black;
+}
+
+.Form select{
+  padding: 0.5rem;
+  border-radius: 100px;
+  border: 3px solid mediumseagreen;
+  background-color:rgb(255, 224, 194);
+  font-size: 1.2em;
+  box-shadow: 1px 1px 2px black;
+  margin: 1rem;
+
+}
+
+.Form select:active {
+  border: 5px solid peru;
+  outline: none;
+  box-shadow: 1px 1px 5px black;
+}
+
+.Form label{
+  display:block;
+}

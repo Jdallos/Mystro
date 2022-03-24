@@ -1,18 +1,49 @@
-import React from "react";
-import { Routes, Route } from "react-router-dom";
+import React, { useState } from "react";
+import { Routes, Route, Link } from "react-router-dom";
 
 import "./App.css";
+import SavedList from "./components/SavedList";
 import DiscoverScreen from "./screens/DiscoverScreen";
 import HomeScreen from "./screens/HomeScreen";
 
 const App: React.FC = () => {
+  const [saved, setSaved] = useState<any[]>([]);
+  const [playing, setPlaying] = useState<any>();
+
   return (
     <div className="App">
-      <h1>Mystro</h1>
+      <h1><Link className="App-header" to="/">Mystro</Link></h1>
+      {playing && <iframe
+        id="musicPlayer"
+        style={{ borderRadius: "12px" }}
+        src={`https://open.spotify.com/embed/track/${playing.slice(
+          31
+        )}?utm_source=generator`}
+        width="100%"
+        height="80"
+        frameBorder="0"
+        allowFullScreen
+        title="musicPlayer"
+        allow="autoplay; clipboard-write; encrypted-media; picture-in-picture"
+      ></iframe>}
+      <SavedList saved={saved} setSaved={setSaved} setPlaying={setPlaying} />
       <Routes>
-        <Route path="/" element={<HomeScreen />} />
-        <Route path="/discover/:id" element={<DiscoverScreen />} />
+        <Route
+          path="/"
+          element={
+            <HomeScreen
+              saved={saved}
+              setSaved={setSaved}
+              setPlaying={setPlaying}
+            />
+          }
+        />
+        <Route
+          path="/discover/:id"
+          element={<DiscoverScreen saved={saved} setSaved={setSaved} setPlaying={setPlaying} />}
+        />
       </Routes>
+      <footer>Mystro created by JD Web Dev, powered by Spotify</footer>
     </div>
   );
 };

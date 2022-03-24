@@ -1,31 +1,46 @@
 import React from "react";
 import Grid from "@mui/material/Grid";
 import Rating from "@mui/material/Rating";
+
 import "../styles/Recommendation.css";
-import SpotifyUtilities from "../utilities/spotify-utils";
 
 interface Props {
   recommendation: any;
-  getInfo: (artistId: string, albumId: string, trackId: string) => void;
+  getInfo: (artistId: string, albumId: string, trackId: string, recommendation: any) => void;
+  saved: any[];
+  setSaved: React.Dispatch<React.SetStateAction<any[]>>;
+  setPlaying: React.Dispatch<React.SetStateAction<any>>;
 }
 
-const Recommendation: React.FC<Props> = ({ recommendation, getInfo }) => {
+const Recommendation: React.FC<Props> = ({ recommendation, getInfo, saved, setSaved, setPlaying }) => {
+
+  const isSaved = saved.filter(item => item.recommendation.id === recommendation.id);
+
   const handleDiscover = () => {
     const artistId = recommendation.artists[0].id;
     const albumId = recommendation.album.id;
     const trackId = recommendation.id;
 
-    getInfo(artistId, albumId, trackId);
+    getInfo(artistId, albumId, trackId, recommendation);
   };
+
+  const handleSave = () => {
+    setSaved([...saved, {recommendation}]);
+  }
+
+  const handleRemove = () => {
+    setSaved(saved.filter(rec => rec.recommendation.id !== recommendation.id));
+  }
+
   return (
     <Grid item xs={10} sm={6} md={4} lg={3} xl={3} className="Recommendation">
-      <h3>Artist: {recommendation.artists[0].name}</h3>
+      <h3><span className="Recommendation-category">Artist:</span> {recommendation.artists[0].name}</h3>
       <h4>
-        Album: {recommendation.album.name} (
+        <span className="Recommendation-category">Album:</span> {recommendation.album.name} (
         {recommendation.album.release_date.slice(0, 4)})
       </h4>
       <h5>
-        Track: {recommendation.track_number}. {recommendation.name}
+        <span className="Recommendation-category">Track:</span> {recommendation.track_number}. {recommendation.name}
       </h5>
       <Rating
         name="popularity"
@@ -41,13 +56,8 @@ const Recommendation: React.FC<Props> = ({ recommendation, getInfo }) => {
       />
       <div>
         <button onClick={handleDiscover}>Discover</button>
-        <a
-          target="_blank"
-          rel="noreferrer"
-          href={recommendation.external_urls.spotify}
-        >
-          here
-        </a>
+        {isSaved.length ? <button onClick={handleRemove}>Remove</button> : <button onClick={handleSave}>Save</button> }
+        <button onClick={()=> setPlaying(recommendation.external_urls.spotify)}>Listen</button>
       </div>
     </Grid>
   );

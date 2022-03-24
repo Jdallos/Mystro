@@ -32,9 +32,9 @@ namespace SpotifyUtilities {
     }
   };
 
-  export const getRecommendations = async (searchId: any, setRecommendations: React.Dispatch<any>, token: string) => {
+  export const getRecommendations = async (searchId: any, setRecommendations: React.Dispatch<any>, token: string, limit: string) => {
     try{
-      const response = await axios(`https://api.spotify.com/v1/recommendations?seed_artists=${searchId.id}`, {
+      const response = await axios(`https://api.spotify.com/v1/recommendations?seed_artists=${searchId.id}&limit=${limit}`, {
         method: 'GET',
         headers: {
           'Authorization': 'Bearer ' + token
