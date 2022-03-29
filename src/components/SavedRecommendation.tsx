@@ -1,33 +1,37 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { saveRecommendation, removeRecommendation, setPlaying } from "../redux/mystroSlice";
+import { getInfo } from "../utilities/generic-utils";
 import "../styles/SavedRecommendation.css";
 
 interface Props {
   recommendation: any;
-  // getInfo?: (artistId: string, albumId: string, trackId: string) => void;
-  saved: any[];
-  setSaved: React.Dispatch<React.SetStateAction<any[]>>;
-  setPlaying: React.Dispatch<any>;
 }
 
-const Recommendation: React.FC<Props> = ({ recommendation, saved, setSaved, setPlaying }) => {
-  const handleDiscover = () => {
-    // const artistId = recommendation.artists[0].id;
-    // const albumId = recommendation.album.id;
-    // const trackId = recommendation.id;
+const Recommendation: React.FC<Props> = ({ recommendation }) => {
 
-    alert("Whoops not working yet...")
-    // With state management can add in get info directly, not working now as too messy to restructure...
-      // getInfo(artistId, albumId, trackId, recommendation);
+  // Redux
+  const saved: any = useSelector((state: any) => state.mystro.saved);
+  const token: any = useSelector((state: any) => state.mystro.token);
+  const dispatch = useDispatch();
+
+  const handleDiscover = () => {
+    const artistId = recommendation.artists[0].id;
+    const albumId = recommendation.album.id;
+    const trackId = recommendation.id;
+
+    getInfo(artistId, albumId, trackId, recommendation, dispatch, token);
   };
 
-  const isSaved = saved.filter(item => item.recommendation.id === recommendation.id);
+  const isSaved = saved.filter((rec: any) => rec.recommendation.id === recommendation.id);
 
+  // This will never be rendered, can be removed along with the save button...
   const handleSave = () => {
-    setSaved([...saved, {recommendation}]);
+    dispatch(saveRecommendation({ recommendation }));
   }
 
   const handleRemove = () => {
-    setSaved(saved.filter(rec => rec.recommendation.id !== recommendation.id));
+    dispatch(removeRecommendation({ id: recommendation.id }));
   }
 
   return (
@@ -43,7 +47,7 @@ const Recommendation: React.FC<Props> = ({ recommendation, saved, setSaved, setP
       <div>
         <button onClick={handleDiscover}>Discover</button>
         {isSaved.length ? <button onClick={handleRemove}>Remove</button> : <button onClick={handleSave}>Save</button> }
-        <button onClick={()=> setPlaying(recommendation.external_urls.spotify)}>Listen</button>
+        <button onClick={()=> dispatch(setPlaying(recommendation.external_urls.spotify))}>Listen</button>
       </div>
     </div>
   );

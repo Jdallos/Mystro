@@ -1,14 +1,15 @@
-import React, { useState } from "react";
+import React from "react";
 import { Routes, Route, Link } from "react-router-dom";
+import { useSelector } from "react-redux";
 
-import "./App.css";
+import "./styles/App.css";
 import SavedList from "./components/SavedList";
 import DiscoverScreen from "./screens/DiscoverScreen";
 import HomeScreen from "./screens/HomeScreen";
 
 const App: React.FC = () => {
-  const [saved, setSaved] = useState<any[]>([]);
-  const [playing, setPlaying] = useState<any>();
+
+  const playing: any = useSelector((state: any) => state.mystro.playing);
 
   return (
     <div className="App">
@@ -26,21 +27,17 @@ const App: React.FC = () => {
         title="musicPlayer"
         allow="autoplay; clipboard-write; encrypted-media; picture-in-picture"
       ></iframe>}
-      <SavedList saved={saved} setSaved={setSaved} setPlaying={setPlaying} />
+      <SavedList />
       <Routes>
         <Route
           path="/"
           element={
-            <HomeScreen
-              saved={saved}
-              setSaved={setSaved}
-              setPlaying={setPlaying}
-            />
+            <HomeScreen />
           }
         />
         <Route
           path="/discover/:id"
-          element={<DiscoverScreen saved={saved} setSaved={setSaved} setPlaying={setPlaying} />}
+          element={<DiscoverScreen />}
         />
       </Routes>
       <footer>Mystro created by JD Web Dev, powered by Spotify</footer>

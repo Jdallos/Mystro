@@ -24,13 +24,6 @@
   border: 1px solid peru;
 }
 
-.DiscoverScreen img{
-  max-width: 50%;
-  max-height: 50%;
-  margin: 0;
-  margin-bottom:-0.5vh;
-}
-
 .Image-container{
   max-width: 80%;
   border: 3px solid mediumseagreen;
@@ -38,16 +31,22 @@
   padding-bottom: -100px;
 }
 
+.DiscoverScreen .Image-container img{
+  width: 50%;
+  height: 450px;
+  margin: 0;
+  margin-bottom:-0.5vh;
+}
+
 .DiscoverScreen ol{
   margin-bottom: 5%;
   padding: 0;
   list-style-position: inside;
-
 }
 
 @media (max-width: 600px) {
-  .DiscoverScreen img{
-    max-width: 80%;
+  .DiscoverScreen .Image-container img{
+    width: 100%;
     max-height: auto;
   }
 }

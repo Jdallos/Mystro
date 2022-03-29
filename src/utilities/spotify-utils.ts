@@ -1,8 +1,11 @@
+import { ActionCreatorWithPayload, Dispatch } from "@reduxjs/toolkit";
 import axios from "axios";
+import { setDetails } from "../redux/mystroSlice";
 
 namespace SpotifyUtilities {
 
-  export const getToken = async(setToken:React.Dispatch<React.SetStateAction<string>>) => {
+
+  export const getToken = async(dispatch: Dispatch<any> , setToken: ActionCreatorWithPayload<any, string>) => {
     try{
       const response = await axios('https://accounts.spotify.com/api/token', {
       headers: {
@@ -12,9 +15,9 @@ namespace SpotifyUtilities {
       data: 'grant_type=client_credentials',
       method: 'POST'
       })
-      setToken(response.data.access_token);
+      dispatch(setToken(response.data.access_token));
     } catch (error) {
-      console.log("Error  is", error);
+      console.log("Error getting token:", error);
     }
   };
 
@@ -45,8 +48,8 @@ namespace SpotifyUtilities {
       console.log("error getting recommendations", e);
     }
   };
- 
-  export const getArtistInfo = async (artistId: any, setDetails: React.Dispatch<any>, token: string) => {
+
+  export const getArtistInfo = async (artistId: any, token: string, dispatch: Dispatch<any>) => {
     try{
       const response = await axios.get<any>(`https://api.spotify.com/v1/artists/${artistId}`, {
         method: 'GET',
@@ -54,13 +57,13 @@ namespace SpotifyUtilities {
           'Authorization': 'Bearer ' + token
         }
       })
-      setDetails((prev: any) =>  ({ ...prev, artist: response.data }));
+      dispatch(setDetails({  artist: response.data, name: "artist" }));
     } catch(e){
       console.log("error getting recommendations", e);
     }
   };
 
-  export const getAlbumInfo = async (albumId: string, setDetails: React.Dispatch<any>, token: string) => {
+  export const getAlbumInfo = async (albumId: string, token: string, dispatch: Dispatch<any>) => {
     try{
       const response = await axios.get<any>(`https://api.spotify.com/v1/albums/${albumId}`, {
         method: 'GET',
@@ -68,13 +71,13 @@ namespace SpotifyUtilities {
           'Authorization': 'Bearer ' + token
         }
       })
-      setDetails((prev: any) =>({...prev, album: response.data }));
+      dispatch(setDetails({ album: response.data, name: "album" }));
     } catch(e){
       console.log("error getting recommendations", e);
     }
   };
 
-  export const getTrackInfo = async (trackId: string, setDetails: React.Dispatch<any>, token: string) => {
+  export const getTrackInfo = async (trackId: string, token: string, dispatch: Dispatch<any>) => {
     try{
       const response = await axios.get<any>(`https://api.spotify.com/v1/tracks/${trackId}`, {
         method: 'GET',
@@ -82,7 +85,7 @@ namespace SpotifyUtilities {
           'Authorization': 'Bearer ' + token
         }
       })
-      setDetails((prev: any) =>({...prev, track: response.data }));
+      dispatch(setDetails({ track: response.data, name: "track" }));
     } catch(e){
       console.log("error getting recommendations", e);
     }

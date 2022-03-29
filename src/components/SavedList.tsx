@@ -12,14 +12,10 @@ import MenuIcon from "@mui/icons-material/Menu";
 import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import ListItem from "@mui/material/ListItem";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 import SavedRecommendation from "./SavedRecommendation";
-
-interface Props {
-  saved: any[];
-  setSaved: React.Dispatch<React.SetStateAction<any[]>>;
-  setPlaying: React.Dispatch<any>;
-}
 
 const drawerWidth = 400;
 
@@ -73,13 +69,22 @@ const DrawerHeader = styled("div")(({ theme }) => ({
   justifyContent: "flex-start",
 }));
 
-const PersistentDrawerRight: React.FC<Props> = ({
-  saved,
-  setSaved,
-  setPlaying,
-}) => {
+const PersistentDrawerRight: React.FC = () => {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
+
+  // Redux
+  const saved: any = useSelector((state: any)=> state.mystro.saved);
+  let details: any = useSelector((state: any) => state.mystro.details);
+
+  let navigate = useNavigate();
+
+  React.useEffect(() => {
+    if (details?.artist?.id && details?.album?.id && details?.track?.id) {
+      navigate(`/discover/${details.track.id}`, { state: { details } });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [details]);
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -90,7 +95,7 @@ const PersistentDrawerRight: React.FC<Props> = ({
   };
 
   return (
-    <Box sx={{ display: "flex", }}>
+    <Box sx={{ display: "flex" }}>
       <CssBaseline />
       <AppBar
         position="fixed"
@@ -102,9 +107,12 @@ const PersistentDrawerRight: React.FC<Props> = ({
           aria-label="open drawer"
           edge="end"
           onClick={handleDrawerOpen}
-          sx={{ ...(open && { display: "none" }), marginLeft: "80%",
-        color: "#3cb371",
-      fontSize: "1.5em" }}
+          sx={{
+            ...(open && { display: "none" }),
+            marginLeft: "80%",
+            color: "#3cb371",
+            fontSize: "1.5em",
+          }}
         >
           Playlist
           <MenuIcon />
@@ -119,7 +127,7 @@ const PersistentDrawerRight: React.FC<Props> = ({
           flexShrink: 0,
           "& .MuiDrawer-paper": {
             width: drawerWidth,
-            backgroundColor: "#FFCC99EE"
+            backgroundColor: "#FFDCB9E9",
           },
         }}
         variant="persistent"
@@ -134,23 +142,20 @@ const PersistentDrawerRight: React.FC<Props> = ({
               <ChevronRightIcon />
             )}
           </IconButton>
-          <Typography sx= {{ color: "#3cb371", fontSize: "1.5em" }}>Your Playlist</Typography>
+          <Typography sx={{ color: "#3cb371", fontSize: "1.5em" }}>
+            Your Playlist
+          </Typography>
         </DrawerHeader>
         <Divider />
         <List>
           {saved.length ? (
-            saved.map((rec) => (
-              // With state management can add in getInfo discovery
-              <ListItem>
-                <SavedRecommendation
-                  recommendation={rec.recommendation}
-                  key={rec.id}
-                  saved={saved}
-                  setSaved={setSaved}
-                  setPlaying={setPlaying}
-                />
-                <Divider />
-              </ListItem>
+            saved.map((rec: any, i: string) => (
+                <ListItem key={rec.recommendation.id}>
+                  <SavedRecommendation
+                    recommendation={rec.recommendation}
+                  />
+                  <Divider />
+                </ListItem>
             ))
           ) : (
             <Typography>You haven't saved anything</Typography>
