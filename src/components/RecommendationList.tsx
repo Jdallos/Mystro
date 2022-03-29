@@ -6,22 +6,18 @@ import Grid from "@mui/material/Grid";
 interface Props {
   recommendations: any;
   searchItem: any;
-  getInfo: (artistId: string, albumId: string, trackId: string, recommendation: any) => void;
-  saved: any[];
-  setSaved: React.Dispatch<React.SetStateAction<any[]>>;
-  setPlaying: React.Dispatch<React.SetStateAction<any>>;
+  // getInfo: (artistId: string, albumId: string, trackId: string, recommendation: any) => void;
 }
 
 // This component may be rerendering on every input onChange...
-const recommendationsList: React.FC<Props> = ({
+const RecommendationsList: React.FC<Props> = ({
   recommendations,
   searchItem,
-  getInfo,
-  saved,
-  setSaved,
-  setPlaying
+  // getInfo,
 }) => {
+
   const recData = recommendations.data.tracks;
+  
   return (
     <div>
       {/* Prevents warning/ crash if search is invalid */}
@@ -36,7 +32,8 @@ const recommendationsList: React.FC<Props> = ({
             >
               <Grid container spacing={3}>
                 {recData.map((rec: any) => (
-                  <Recommendation recommendation={rec} key={rec.id} getInfo={getInfo} saved={saved} setSaved={setSaved} setPlaying={setPlaying} />
+                  <Recommendation recommendation={rec} key={rec.id} />
+                  // getInfo={getInfo}
                 ))}
               </Grid>
             </Container>
@@ -49,4 +46,4 @@ const recommendationsList: React.FC<Props> = ({
   );
 };
 
-export default memo(recommendationsList);
+export default memo(RecommendationsList);

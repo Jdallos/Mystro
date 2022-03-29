@@ -1,6 +1,6 @@
 .App {
   text-align: center;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url("../public/mystro-background.jpg");
+  background-image: linear-gradient(#00000066, rgba(0, 0, 0, 0.4)), url("../../public/mystro-background.jpg");
   min-height:100vh;
   height:100%;
   margin:0;

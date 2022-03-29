@@ -12,7 +12,7 @@ const Form: React.FC<Props> = ({searchInputId, search, setSearch, setLimit}) => 
   return (
     <form className="Form" onSubmit={searchInputId}>
       <label htmlFor="artistSearch">Get Recommendations based on your favourite musicians:</label>
-      <input 
+      <input
         type="text"
         value={search}
         id="artistSearch"
@@ -20,8 +20,8 @@ const Form: React.FC<Props> = ({searchInputId, search, setSearch, setLimit}) => 
         onChange={(e) => setSearch(e.target.value)}
       />
       <label htmlFor="limit">Number of recommendations:</label>
-      <select name="limit" id="limit" onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setLimit(e.target.value)}>
-        <option selected value="20">20</option>
+      <select name="limit" defaultValue="20" id="limit" onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setLimit(e.target.value)}>
+        <option value="20">20</option>
         <option value="40">40</option>
         <option value="60">60</option>
         <option value="80">80</option>
