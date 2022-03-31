@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { Routes, Route, Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
@@ -6,10 +6,11 @@ import "./styles/App.css";
 import SavedList from "./components/SavedList";
 import DiscoverScreen from "./screens/DiscoverScreen";
 import HomeScreen from "./screens/HomeScreen";
+import { ReduxState } from "./types/schema";
 
 const App: React.FC = () => {
 
-  const playing: any = useSelector((state: any) => state.mystro.playing);
+  const playing: string = useSelector((state: ReduxState) => state.mystro.playing);
 
   return (
     <div className="App">

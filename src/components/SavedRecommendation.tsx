@@ -1,18 +1,20 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { saveRecommendation, removeRecommendation, setPlaying } from "../redux/mystroSlice";
-import { getInfo } from "../utilities/generic-utils";
+import { getDiscoveryInfo } from "../utilities/generic-utils";
 import "../styles/SavedRecommendation.css";
+import { TrackObjectFull, ReduxState } from "../types/schema";
+
 
 interface Props {
-  recommendation: any;
+  recommendation: TrackObjectFull;
 }
 
-const Recommendation: React.FC<Props> = ({ recommendation }) => {
+const SavedRecommendation: React.FC<Props> = ({ recommendation }) => {
 
   // Redux
-  const saved: any = useSelector((state: any) => state.mystro.saved);
-  const token: any = useSelector((state: any) => state.mystro.token);
+  const saved: TrackObjectFull[] = useSelector((state: ReduxState) => state.mystro.saved);
+  const token: string = useSelector((state: ReduxState) => state.mystro.token);
   const dispatch = useDispatch();
 
   const handleDiscover = () => {
@@ -20,10 +22,10 @@ const Recommendation: React.FC<Props> = ({ recommendation }) => {
     const albumId = recommendation.album.id;
     const trackId = recommendation.id;
 
-    getInfo(artistId, albumId, trackId, recommendation, dispatch, token);
+    getDiscoveryInfo(artistId, albumId, trackId, recommendation, dispatch, token);
   };
 
-  const isSaved = saved.filter((rec: any) => rec.recommendation.id === recommendation.id);
+  const isSaved = saved.filter((rec: TrackObjectFull) => rec.id === recommendation.id);
 
   // This will never be rendered, can be removed along with the save button...
   const handleSave = () => {
@@ -53,4 +55,4 @@ const Recommendation: React.FC<Props> = ({ recommendation }) => {
   );
 };
 
-export default Recommendation;
+export default SavedRecommendation;

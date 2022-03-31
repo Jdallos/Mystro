@@ -3,12 +3,13 @@ import Grid from "@mui/material/Grid";
 import Rating from "@mui/material/Rating";
 import { useDispatch, useSelector } from "react-redux";
 import { saveRecommendation, removeRecommendation, setPlaying } from "../redux/mystroSlice";
-import { getInfo } from "../utilities/generic-utils";
+import { getDiscoveryInfo } from "../utilities/generic-utils";
 
 import "../styles/Recommendation.css";
+import { TrackObjectFull, ReduxState } from "../types/schema";
 
 interface Props {
-  recommendation: any;
+  recommendation: TrackObjectFull;
 }
 
 const Recommendation: React.FC<Props> = ({
@@ -16,13 +17,13 @@ const Recommendation: React.FC<Props> = ({
 }) => {
 
   // Redux
-  const saved: any = useSelector((state: any) => state.mystro.saved);
-  const token: any = useSelector((state: any) => state.mystro.token);
+  const saved: TrackObjectFull[] = useSelector((state: ReduxState) => state.mystro.saved);
+  const token: string = useSelector((state: ReduxState) => state.mystro.token);
 
   const dispatch = useDispatch();
 
   const isSaved = saved.filter(
-    (item: any) => item.recommendation.id === recommendation.id
+    (item: TrackObjectFull) => item.id === recommendation.id
   );
 
   const handleDiscover = () => {
@@ -30,11 +31,11 @@ const Recommendation: React.FC<Props> = ({
     const albumId = recommendation.album.id;
     const trackId = recommendation.id;
 
-    getInfo(artistId, albumId, trackId, recommendation, dispatch, token);
+    getDiscoveryInfo(artistId, albumId, trackId, recommendation, dispatch, token);
   };
 
   const handleSave = () => {
-    dispatch(saveRecommendation({ recommendation }));
+    dispatch(saveRecommendation({ ...recommendation }));
   };
 
   const handleRemove = () => {

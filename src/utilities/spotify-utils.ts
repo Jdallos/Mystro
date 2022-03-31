@@ -1,9 +1,9 @@
 import { ActionCreatorWithPayload, Dispatch } from "@reduxjs/toolkit";
 import axios from "axios";
 import { setDetails } from "../redux/mystroSlice";
+import { Recommendations, ArtistSearch } from "../types/schema";
 
 namespace SpotifyUtilities {
-
 
   export const getToken = async(dispatch: Dispatch<any> , setToken: ActionCreatorWithPayload<any, string>) => {
     try{
@@ -21,7 +21,7 @@ namespace SpotifyUtilities {
     }
   };
 
-  export const getSearchId = async (search: string, setSearchId: React.Dispatch<React.SetStateAction<string>>, token: string ) =>{
+  export const getSearchId = async (search: string, setSearchId: React.Dispatch<React.SetStateAction<ArtistSearch | undefined>>, token: string ) =>{
     try {
       const response = await axios(`https://api.spotify.com/v1/search?q=${search}&type=artist`, {
         method: 'GET',
@@ -35,7 +35,7 @@ namespace SpotifyUtilities {
     }
   };
 
-  export const getRecommendations = async (searchId: any, setRecommendations: React.Dispatch<any>, token: string, limit: string) => {
+  export const getRecommendations = async (searchId: ArtistSearch, setRecommendations: React.Dispatch<React.SetStateAction<Recommendations | undefined>>, token: string, limit: string) => {
     try{
       const response = await axios(`https://api.spotify.com/v1/recommendations?seed_artists=${searchId.id}&limit=${limit}`, {
         method: 'GET',
@@ -43,13 +43,13 @@ namespace SpotifyUtilities {
           'Authorization': 'Bearer ' + token
         }
       })
-      setRecommendations({ ...response });
+      setRecommendations({ ...response.data });
     } catch(e){
       console.log("error getting recommendations", e);
     }
   };
 
-  export const getArtistInfo = async (artistId: any, token: string, dispatch: Dispatch<any>) => {
+  export const getArtistInfo = async (artistId: string, token: string, dispatch: Dispatch<any>) => {
     try{
       const response = await axios.get<any>(`https://api.spotify.com/v1/artists/${artistId}`, {
         method: 'GET',
@@ -59,7 +59,7 @@ namespace SpotifyUtilities {
       })
       dispatch(setDetails({  artist: response.data, name: "artist" }));
     } catch(e){
-      console.log("error getting recommendations", e);
+      console.log("error getting artist info", e);
     }
   };
 
@@ -73,7 +73,7 @@ namespace SpotifyUtilities {
       })
       dispatch(setDetails({ album: response.data, name: "album" }));
     } catch(e){
-      console.log("error getting recommendations", e);
+      console.log("error getting album info", e);
     }
   };
 
@@ -87,7 +87,7 @@ namespace SpotifyUtilities {
       })
       dispatch(setDetails({ track: response.data, name: "track" }));
     } catch(e){
-      console.log("error getting recommendations", e);
+      console.log("error getting track info", e);
     }
   };
 };

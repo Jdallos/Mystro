@@ -16,6 +16,7 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import SavedRecommendation from "./SavedRecommendation";
+import { TrackObjectFull, Discover, ReduxState } from "../types/schema";
 
 const drawerWidth = 400;
 
@@ -74,8 +75,8 @@ const PersistentDrawerRight: React.FC = () => {
   const [open, setOpen] = React.useState(false);
 
   // Redux
-  const saved: any = useSelector((state: any)=> state.mystro.saved);
-  let details: any = useSelector((state: any) => state.mystro.details);
+  const saved: TrackObjectFull[]  = useSelector((state: ReduxState)=> state.mystro.saved);
+  let details: Discover = useSelector((state: ReduxState) => state.mystro.details);
 
   let navigate = useNavigate();
 
@@ -149,10 +150,10 @@ const PersistentDrawerRight: React.FC = () => {
         <Divider />
         <List>
           {saved.length ? (
-            saved.map((rec: any, i: string) => (
-                <ListItem key={rec.recommendation.id}>
+            saved.map((rec: TrackObjectFull) => (
+                <ListItem key={rec.id}>
                   <SavedRecommendation
-                    recommendation={rec.recommendation}
+                    recommendation={rec}
                   />
                   <Divider />
                 </ListItem>
