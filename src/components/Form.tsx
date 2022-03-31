@@ -1,11 +1,11 @@
-import React, { memo } from "react";
+import React from "react";
 import "../styles/Form.css";
 
 interface Props {
   searchInputId: (e: React.FormEvent) => void;
   search: string;
-  setSearch: (value: React.SetStateAction<string>) => void;
-  setLimit: React.Dispatch<any>;
+  setSearch: React.Dispatch<React.SetStateAction<string>>
+  setLimit: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const Form: React.FC<Props> = ({searchInputId, search, setSearch, setLimit}) => {
@@ -31,4 +31,4 @@ const Form: React.FC<Props> = ({searchInputId, search, setSearch, setLimit}) => 
   );
 };
 
-export default memo(Form);
+export default Form;

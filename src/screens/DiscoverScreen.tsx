@@ -4,19 +4,21 @@ import { Link, useLocation } from "react-router-dom";
 import { saveRecommendation, removeRecommendation, setPlaying } from "../redux/mystroSlice";
 import "../styles/DiscoverScreen.css";
 
+import { Discover, TrackObjectFull, ReduxState } from "../types/schema";
+
 const DiscoverScreen: React.FC = () => {
 
-   useLayoutEffect(() => {
+  useLayoutEffect(() => {
         window.scrollTo(0, 0)
-    },[]);
+  },[]);
 
   // Redux
-  const saved: any = useSelector((state: any) => state.mystro.saved);
+  const saved: TrackObjectFull[] = useSelector((state: ReduxState) => state.mystro.saved);
   const dispatch = useDispatch();
 
   // Passing data between routes, could use params and then make API call based on the ID.
   const location: any = useLocation();
-  const details: any = location.state.details;
+  const details: Discover = location.state.details;
 
   let genreString = "";
   for (let i = 0; i < details.artist.genres.length; i++) {
@@ -27,7 +29,7 @@ const DiscoverScreen: React.FC = () => {
     }
   };
 
-  const isSaved = saved.filter((rec: any) => rec.recommendation.id === details.recommendation.id);
+  const isSaved = saved.filter((rec: any) => rec.id === details.recommendation.id);
 
   const handleSave = () => {
     let recommendation = details.recommendation;
@@ -68,7 +70,7 @@ const DiscoverScreen: React.FC = () => {
       </div>
       <h4>{details.album.name} track list:</h4>
       <ol>
-        {details.album.tracks.items.map((track:any) => (
+        {details.album.tracks.items.map((track) => (
           <li key={track.id}>{track.name}</li>
         ))}
       </ol>

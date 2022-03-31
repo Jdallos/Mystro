@@ -1,14 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
 // If wanted to serialize functions to store in redux.
 // import { getInfoSerialized } from "../redux/serializedFunctions";
+import { TrackObjectFull } from "../types/schema";
 
 // Get access to actions and reducers
 const mystroSlice = createSlice({
   name: "mystro",
   initialState: {
     saved: [],
-    playing: null,
-    token: null,
+    playing: "",
+    token: "",
     details: {},
     // If wanted to serialize functions to store in redux.
     // functions: {
@@ -17,14 +18,14 @@ const mystroSlice = createSlice({
   } as any,
   reducers: {
     saveRecommendation: (state, action) => {
-      const newRecommendation: any = {
+      const newRecommendation: TrackObjectFull = {
         ...action.payload
       };
       state.saved.push(newRecommendation);
     },
     removeRecommendation: (state, action) => {
       const newSaveState = state.saved.filter(
-        (rec: any) => rec.recommendation.id !== action.payload.id
+        (rec: TrackObjectFull) => rec.id !== action.payload.id
       );
       state.saved = newSaveState;
     },

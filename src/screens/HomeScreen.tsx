@@ -1,4 +1,4 @@
-import React, { useEffect, useState, memo } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import LinearProgress from "@mui/material/LinearProgress";
 
@@ -8,32 +8,30 @@ import Form from "../components/Form";
 import "../styles/HomeScreen.css";
 import { useSelector, useDispatch } from "react-redux";
 import { setToken, setDetails } from "../redux/mystroSlice";
-
+import { Recommendations, Discover, ArtistSearch, ReduxState } from "../types/schema";
 
 const HomeScreen: React.FC = () => {
-  // const [token, setToken] = useState<string>("");
   const [search, setSearch] = useState<string>("");
-  const [searchId, setSearchId] = useState<string>("");
-  const [recommendations, setRecommendations] = useState<any>();
-  // const [details, setDetails] = useState<any>();
-  const [limit, setLimit] = useState<any>("20");
+  const [searchId, setSearchId] = useState<ArtistSearch>();
+  const [recommendations, setRecommendations] = useState<Recommendations>();
+  const [limit, setLimit] = useState<string>("20");
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   // Redux
-  let details: any = useSelector((state: any) => state.mystro.details);
-  const token: any = useSelector((state: any) => state.mystro.token);
-  // const getInfo: any = useSelector((state: any) => state.mystro.functions.getInfo);
+  let details: Discover|undefined = useSelector((state: ReduxState) => state.mystro.details);
+  const token: string = useSelector((state: ReduxState) => state.mystro.token);
   const dispatch = useDispatch();
 
   useEffect(() => {
     SpotifyUtilities.getToken(dispatch, setToken);
-    // This resets details to prevent the navigation to discovery page
+    // This resets details to prevent the navigation sticking to discovery page
     dispatch(setDetails(undefined));
+    // eslint-disable-next-line
     details = undefined;
   }, []);
 
   useEffect(() => {
-    if (searchId !== "") {
+    if (searchId) {
       const waitRecs = async () => {
         await SpotifyUtilities.getRecommendations(
           searchId,
@@ -62,22 +60,6 @@ const HomeScreen: React.FC = () => {
     SpotifyUtilities.getSearchId(search, setSearchId, token);
   };
 
-  // const getInfo = async (
-  //   artistId: string,
-  //   albumId: string,
-  //   trackId: string,
-  //   recommendation: any
-  // ) => {
-  //   // setDetails(null);
-  //   // setDetails({ recommendation: recommendation, name: "recommendation" });
-  //   dispatch(setDetails(null));
-  //   dispatch(setDetails({ recommendation: recommendation, name: "recommendation" }));
-
-  //   await SpotifyUtilities.getArtistInfo(artistId, token, dispatch);
-  //   await SpotifyUtilities.getAlbumInfo(albumId, token, dispatch);
-  //   await SpotifyUtilities.getTrackInfo(trackId, token, dispatch);
-  // };
-
   return (
     <div className="HomeScreen">
       <Form
@@ -92,7 +74,6 @@ const HomeScreen: React.FC = () => {
         <RecommendationsList
           searchItem={searchId}
           recommendations={recommendations}
-          // getInfo={getInfo}
         />
       ) : (
         <h4>Try a search...</h4>
@@ -101,4 +82,4 @@ const HomeScreen: React.FC = () => {
   );
 };
 
-export default memo(HomeScreen);
+export default HomeScreen;

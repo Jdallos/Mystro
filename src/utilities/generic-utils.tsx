@@ -1,14 +1,15 @@
 import { Dispatch } from "@reduxjs/toolkit";
 import SpotifyUtilities from "../utilities/spotify-utils";
 import { setDetails } from "../redux/mystroSlice";
+import { TrackObjectFull } from "../types/schema";
 
-export const getInfo = (
+export const getDiscoveryInfo = (
   artistId: string,
   albumId: string,
   trackId: string,
-  recommendation: any,
+  recommendation: TrackObjectFull,
   dispatch: Dispatch<any>,
-  token: any,
+  token: string,
 ) => {
   dispatch(setDetails(null));
   dispatch(setDetails({ recommendation: recommendation, name: "recommendation" }));

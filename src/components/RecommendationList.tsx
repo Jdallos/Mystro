@@ -1,23 +1,21 @@
-import React, { memo } from "react";
+import React from "react";
 import Recommendation from "./Recommendation";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
+import { Recommendations, ArtistSearch } from "../types/schema";
 
 interface Props {
-  recommendations: any;
-  searchItem: any;
-  // getInfo: (artistId: string, albumId: string, trackId: string, recommendation: any) => void;
+  recommendations: Recommendations;
+  searchItem?: ArtistSearch;
 }
 
-// This component may be rerendering on every input onChange...
 const RecommendationsList: React.FC<Props> = ({
   recommendations,
   searchItem,
-  // getInfo,
 }) => {
 
-  const recData = recommendations.data.tracks;
-  
+  const recData = recommendations.tracks;
+
   return (
     <div>
       {/* Prevents warning/ crash if search is invalid */}
@@ -31,9 +29,8 @@ const RecommendationsList: React.FC<Props> = ({
               sx={{ marginY: 5 }}
             >
               <Grid container spacing={3}>
-                {recData.map((rec: any) => (
+                {recData.map((rec) => (
                   <Recommendation recommendation={rec} key={rec.id} />
-                  // getInfo={getInfo}
                 ))}
               </Grid>
             </Container>
@@ -46,4 +43,4 @@ const RecommendationsList: React.FC<Props> = ({
   );
 };
 
-export default memo(RecommendationsList);
+export default RecommendationsList;
