@@ -2,16 +2,23 @@ import React from "react";
 import Grid from "@mui/material/Grid";
 import Rating from "@mui/material/Rating";
 import { useDispatch, useSelector } from "react-redux";
+
 import { saveRecommendation, removeRecommendation, setPlaying } from "../redux/mystroSlice";
 import { getDiscoveryInfo } from "../utilities/generic-utils";
-
-import "../styles/Recommendation.css";
 import { TrackObjectFull, ReduxState } from "../types/schema";
+import "../styles/Recommendation.css";
 
 interface Props {
   recommendation: TrackObjectFull;
 }
 
+/**
+ *
+ * Recommendation component
+ *
+ * @param recommendation a single recommendation
+ * @returns Display the individual recommendation
+ */
 const Recommendation: React.FC<Props> = ({
   recommendation,
 }) => {
@@ -26,6 +33,9 @@ const Recommendation: React.FC<Props> = ({
     (item: TrackObjectFull) => item.id === recommendation.id
   );
 
+  /**
+   * Provides Id's to combine data from serveral spotify API endpoints
+   */
   const handleDiscover = () => {
     const artistId = recommendation.artists[0].id;
     const albumId = recommendation.album.id;

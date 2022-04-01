@@ -3,7 +3,9 @@ import { createSlice } from "@reduxjs/toolkit";
 // import { getInfoSerialized } from "../redux/serializedFunctions";
 import { TrackObjectFull } from "../types/schema";
 
-// Get access to actions and reducers
+/**
+ * Redux Slice
+ */
 const mystroSlice = createSlice({
   name: "mystro",
   initialState: {

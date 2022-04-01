@@ -1,15 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import LinearProgress from "@mui/material/LinearProgress";
+import { useSelector, useDispatch } from "react-redux";
 
 import SpotifyUtilities from "../utilities/spotify-utils";
 import RecommendationsList from "../components/RecommendationList";
 import Form from "../components/Form";
-import "../styles/HomeScreen.css";
-import { useSelector, useDispatch } from "react-redux";
 import { setToken, setDetails } from "../redux/mystroSlice";
 import { Recommendations, Discover, ArtistSearch, ReduxState } from "../types/schema";
+import "../styles/HomeScreen.css";
 
+/**
+ * Homescreen for Mystro
+ *
+ * @returns Homescreen display
+ */
 const HomeScreen: React.FC = () => {
   const [search, setSearch] = useState<string>("");
   const [searchId, setSearchId] = useState<ArtistSearch>();
@@ -22,6 +27,9 @@ const HomeScreen: React.FC = () => {
   const token: string = useSelector((state: ReduxState) => state.mystro.token);
   const dispatch = useDispatch();
 
+  /**
+   * Get API access token
+   */
   useEffect(() => {
     SpotifyUtilities.getToken(dispatch, setToken);
     // This resets details to prevent the navigation sticking to discovery page
@@ -30,6 +38,9 @@ const HomeScreen: React.FC = () => {
     details = undefined;
   }, []);
 
+  /**
+   * Get recommendations API call and update loading state
+   */
   useEffect(() => {
     if (searchId) {
       const waitRecs = async () => {
@@ -47,6 +58,9 @@ const HomeScreen: React.FC = () => {
 
   let navigate = useNavigate();
 
+  /**
+   * Navigate to individual recommendation discover page when all data has been returned from API
+   */
   useEffect(() => {
     if (details?.artist?.id && details?.album?.id && details?.track?.id) {
       navigate(`/discover/${details.track.id}`, { state: { details } });
@@ -54,6 +68,9 @@ const HomeScreen: React.FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [details]);
 
+  /**
+   * Get form search Id from spotify API
+   */
   const searchInputId = (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);

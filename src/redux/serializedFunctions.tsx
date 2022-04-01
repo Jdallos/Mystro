@@ -1,5 +1,6 @@
-// This code is no longer in use, could serialize functions here if wanted to store and pass in redux state.
-
+/**
+ *This code is no longer in use, could serialize functions here if wanted to store and pass in redux state.
+ */
 // import { Dispatch } from "@reduxjs/toolkit";
 // import SpotifyUtilities from "../utilities/spotify-utils";
 // import { setDetails } from "./mystroSlice";

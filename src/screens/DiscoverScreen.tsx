@@ -1,11 +1,17 @@
 import React, { useLayoutEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
+
 import { saveRecommendation, removeRecommendation, setPlaying } from "../redux/mystroSlice";
+import { Discover, TrackObjectFull, ReduxState } from "../types/schema";
 import "../styles/DiscoverScreen.css";
 
-import { Discover, TrackObjectFull, ReduxState } from "../types/schema";
-
+/**
+ *
+ * Discover screen for single recommendation details
+ *
+ * @returns Discover screen display
+ */
 const DiscoverScreen: React.FC = () => {
 
   useLayoutEffect(() => {
@@ -16,7 +22,7 @@ const DiscoverScreen: React.FC = () => {
   const saved: TrackObjectFull[] = useSelector((state: ReduxState) => state.mystro.saved);
   const dispatch = useDispatch();
 
-  // Passing data between routes, could use params and then make API call based on the ID.
+  //React Router
   const location: any = useLocation();
   const details: Discover = location.state.details;
 
@@ -33,7 +39,7 @@ const DiscoverScreen: React.FC = () => {
 
   const handleSave = () => {
     let recommendation = details.recommendation;
-    dispatch(saveRecommendation({ recommendation }));
+    dispatch(saveRecommendation({ ...recommendation }));
   }
 
   const handleRemove = () => {

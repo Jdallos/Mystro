@@ -2,6 +2,7 @@ import React from "react";
 import Recommendation from "./Recommendation";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
+
 import { Recommendations, ArtistSearch } from "../types/schema";
 
 interface Props {
@@ -9,6 +10,14 @@ interface Props {
   searchItem?: ArtistSearch;
 }
 
+/**
+ *
+ * Recommendations List component to display all recommendation responses
+ *
+ * @param recommendations array of recommendations
+ * @param searchItem API response data from user search
+ * @returns Recommendations list display
+ */
 const RecommendationsList: React.FC<Props> = ({
   recommendations,
   searchItem,
