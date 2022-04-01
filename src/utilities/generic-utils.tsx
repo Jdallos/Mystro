@@ -3,6 +3,16 @@ import SpotifyUtilities from "../utilities/spotify-utils";
 import { setDetails } from "../redux/mystroSlice";
 import { TrackObjectFull } from "../types/schema";
 
+/**
+ * Get data from Artist, Album & Track API endpoints
+ *
+ * @param artistId string from API
+ * @param albumId string from API
+ * @param trackId string from API
+ * @param recommendation data object
+ * @param dispatch Redux dispatch function
+ * @param token access token string
+ */
 export const getDiscoveryInfo = (
   artistId: string,
   albumId: string,

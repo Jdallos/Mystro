@@ -1,13 +1,19 @@
-import React, { memo } from "react";
+import React from "react";
 import { Routes, Route, Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-import "./styles/App.css";
 import SavedList from "./components/SavedList";
 import DiscoverScreen from "./screens/DiscoverScreen";
 import HomeScreen from "./screens/HomeScreen";
 import { ReduxState } from "./types/schema";
+import "./styles/App.css";
 
+/**
+ *
+ * Mystro App
+ *
+ * @returns Mystro App
+ */
 const App: React.FC = () => {
 
   const playing: string = useSelector((state: ReduxState) => state.mystro.playing);

@@ -70,6 +70,12 @@ const DrawerHeader = styled("div")(({ theme }) => ({
   justifyContent: "flex-start",
 }));
 
+/**
+ *
+ * Draw component containing saved recommendations
+ *
+ * @returns MUI draw component display containing saved recommendations
+ */
 const PersistentDrawerRight: React.FC = () => {
   const theme = useTheme();
   const [open, setOpen] = React.useState(false);
@@ -77,9 +83,11 @@ const PersistentDrawerRight: React.FC = () => {
   // Redux
   const saved: TrackObjectFull[]  = useSelector((state: ReduxState)=> state.mystro.saved);
   let details: Discover = useSelector((state: ReduxState) => state.mystro.details);
-
   let navigate = useNavigate();
 
+  /**
+   * Navigate to individual recommendation discover page when all data has been returned from API
+   */
   React.useEffect(() => {
     if (details?.artist?.id && details?.album?.id && details?.track?.id) {
       navigate(`/discover/${details.track.id}`, { state: { details } });

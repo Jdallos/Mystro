@@ -1,22 +1,32 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { saveRecommendation, removeRecommendation, setPlaying } from "../redux/mystroSlice";
-import { getDiscoveryInfo } from "../utilities/generic-utils";
-import "../styles/SavedRecommendation.css";
-import { TrackObjectFull, ReduxState } from "../types/schema";
 
+import { removeRecommendation, setPlaying } from "../redux/mystroSlice";
+import { getDiscoveryInfo } from "../utilities/generic-utils";
+import { ReduxState } from "../types/schema";
+import "../styles/SavedRecommendation.css";
 
 interface Props {
-  recommendation: TrackObjectFull;
+  // recommendation: TrackObjectFull;
+  recommendation: any;
 }
 
+/**
+ *
+ *Single saved recommendation
+ *
+ * @param recommendation single recommendation
+ * @returns single recommendation display
+ */
 const SavedRecommendation: React.FC<Props> = ({ recommendation }) => {
 
   // Redux
-  const saved: TrackObjectFull[] = useSelector((state: ReduxState) => state.mystro.saved);
   const token: string = useSelector((state: ReduxState) => state.mystro.token);
   const dispatch = useDispatch();
 
+  /**
+   * Provides Id's to combine data from serveral spotify API endpoints
+   */
   const handleDiscover = () => {
     const artistId = recommendation.artists[0].id;
     const albumId = recommendation.album.id;
@@ -24,13 +34,6 @@ const SavedRecommendation: React.FC<Props> = ({ recommendation }) => {
 
     getDiscoveryInfo(artistId, albumId, trackId, recommendation, dispatch, token);
   };
-
-  const isSaved = saved.filter((rec: TrackObjectFull) => rec.id === recommendation.id);
-
-  // This will never be rendered, can be removed along with the save button...
-  const handleSave = () => {
-    dispatch(saveRecommendation({ recommendation }));
-  }
 
   const handleRemove = () => {
     dispatch(removeRecommendation({ id: recommendation.id }));
@@ -48,7 +51,7 @@ const SavedRecommendation: React.FC<Props> = ({ recommendation }) => {
       />
       <div>
         <button onClick={handleDiscover}>Discover</button>
-        {isSaved.length ? <button onClick={handleRemove}>Remove</button> : <button onClick={handleSave}>Save</button> }
+        <button onClick={handleRemove}>Remove</button>
         <button onClick={()=> dispatch(setPlaying(recommendation.external_urls.spotify))}>Listen</button>
       </div>
     </div>

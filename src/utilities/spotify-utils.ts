@@ -4,7 +4,12 @@ import { setDetails } from "../redux/mystroSlice";
 import { Recommendations, ArtistSearch } from "../types/schema";
 
 namespace SpotifyUtilities {
-
+/**
+ * Get spotify access token
+ *
+ * @param dispatch redux dispatch
+ * @param setToken redux action
+ */
   export const getToken = async(dispatch: Dispatch<any> , setToken: ActionCreatorWithPayload<any, string>) => {
     try{
       const response = await axios('https://accounts.spotify.com/api/token', {
@@ -21,6 +26,14 @@ namespace SpotifyUtilities {
     }
   };
 
+/**
+ *
+ *Get Id from spotify matching form input
+ *
+ * @param search string from form input
+ * @param setSearchId React dispatch function
+ * @param token API access token
+ */
   export const getSearchId = async (search: string, setSearchId: React.Dispatch<React.SetStateAction<ArtistSearch | undefined>>, token: string ) =>{
     try {
       const response = await axios(`https://api.spotify.com/v1/search?q=${search}&type=artist`, {
@@ -35,6 +48,13 @@ namespace SpotifyUtilities {
     }
   };
 
+/**
+ *
+ * @param searchId Search response data
+ * @param setRecommendations react dispatch to update recommendations
+ * @param token API access token
+ * @param limit number of recommendations to recieve from API
+ */
   export const getRecommendations = async (searchId: ArtistSearch, setRecommendations: React.Dispatch<React.SetStateAction<Recommendations | undefined>>, token: string, limit: string) => {
     try{
       const response = await axios(`https://api.spotify.com/v1/recommendations?seed_artists=${searchId.id}&limit=${limit}`, {
@@ -49,6 +69,14 @@ namespace SpotifyUtilities {
     }
   };
 
+/**
+ *
+ *Get the Artist info from Spotify API
+ *
+ * @param artistId API artist id
+ * @param token API access token
+ * @param dispatch redux dispatch
+ */
   export const getArtistInfo = async (artistId: string, token: string, dispatch: Dispatch<any>) => {
     try{
       const response = await axios.get<any>(`https://api.spotify.com/v1/artists/${artistId}`, {
@@ -63,6 +91,14 @@ namespace SpotifyUtilities {
     }
   };
 
+/**
+ *
+ *Get album info from Spotify API
+ *
+ * @param albumId API album id
+ * @param token API access token
+ * @param dispatch Redux dispatch
+ */
   export const getAlbumInfo = async (albumId: string, token: string, dispatch: Dispatch<any>) => {
     try{
       const response = await axios.get<any>(`https://api.spotify.com/v1/albums/${albumId}`, {
@@ -77,6 +113,14 @@ namespace SpotifyUtilities {
     }
   };
 
+/**
+ *
+ *Get track info from Spotify API
+ *
+ * @param trackId API track id
+ * @param token API access token
+ * @param dispatch Redux dispatch
+ */
   export const getTrackInfo = async (trackId: string, token: string, dispatch: Dispatch<any>) => {
     try{
       const response = await axios.get<any>(`https://api.spotify.com/v1/tracks/${trackId}`, {

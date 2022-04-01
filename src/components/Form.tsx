@@ -8,6 +8,15 @@ interface Props {
   setLimit: React.Dispatch<React.SetStateAction<string>>;
 }
 
+/**
+ * Form component to take user input to act as seed for recommendations
+ *
+ * @param searchInputId form handler function to submit input to spotify API
+ * @param search user search input
+ * @param setSearch updates the search state
+ * @param setLimit sets the limit value for how many recommendations to recive
+ * @returns Form Component
+ */
 const Form: React.FC<Props> = ({searchInputId, search, setSearch, setLimit}) => {
   return (
     <form className="Form" onSubmit={searchInputId}>
