@@ -1,46 +1,11 @@
-# Getting Started with Create React App
+#Mystro
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Mystro is a music discovery app in which you curate your own journey.
 
-## Available Scripts
+Mystro uses the power of Spotify to generate recommendations based upon a users favourite musicians and artists. You can easily discover new tracks, albums and artists based upon your own preferences and save your favourite new tracks into your own Mystro playlist.
 
-In the project directory, you can run:
+Mystro places album artwork front and center, you can listen to your latest custom recommendation while browsing through hundreds of pieces of album art work at a time.
 
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+##Technology
+Mystro is a react app built using TypeScript and the power of the spotify API.
+You will need to provide your own Client ID and Secret which can be obtained by create a free spotify account at https://developer.spotify.com/dashboard
