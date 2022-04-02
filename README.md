@@ -1,4 +1,4 @@
-#Mystro
+# Mystro
 
 Mystro is a music discovery app in which you curate your own journey.
 
@@ -6,6 +6,7 @@ Mystro uses the power of Spotify to generate recommendations based upon a users 
 
 Mystro places album artwork front and center, you can listen to your latest custom recommendation while browsing through hundreds of pieces of album art work at a time.
 
-##Technology
+## Technology
+
 Mystro is a react app built using TypeScript and the power of the spotify API.
 You will need to provide your own Client ID and Secret which can be obtained by create a free spotify account at https://developer.spotify.com/dashboard
