@@ -2,7 +2,6 @@
   "name": "mystro",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://mystro-music-discovery.herokuapp.com/",
   "dependencies": {
     "@emotion/react": "^11.8.2",
     "@emotion/styled": "^11.8.1",
@@ -16,7 +15,6 @@
     "@types/node": "^16.11.26",
     "@types/react": "^17.0.40",
     "@types/react-dom": "^17.0.13",
-    "@types/spotify-api": "^0.0.14",
     "axios": "^0.26.1",
     "node-fetch": "^3.2.3",
     "react": "^17.0.2",
