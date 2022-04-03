@@ -31,6 +31,8 @@ const HomeScreen: React.FC = () => {
    * Get API access token
    */
   useEffect(() => {
+    console.log("test", process.env.REACT_APP_CLIENT_ID);
+      console.log("test", process.env.REACT_APP_CLIENT_SECRET);
     SpotifyUtilities.getToken(dispatch, setToken);
     // This resets details to prevent the navigation sticking to discovery page
     dispatch(setDetails(undefined));
