@@ -20,6 +20,9 @@ namespace SpotifyUtilities {
       data: 'grant_type=client_credentials',
       method: 'POST'
       })
+      console.log("test", process.env.REACT_APP_CLIENT_ID);
+      console.log("test", process.env.REACT_APP_CLIENT_SECRET);
+
       dispatch(setToken(response.data.access_token));
     } catch (error) {
       console.log("Error getting token:", error);
