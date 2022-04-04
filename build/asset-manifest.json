@@ -1,0 +1,14 @@
+{
+  "files": {
+    "main.css": "/static/css/main.3adbd8a1.css",
+    "main.js": "/static/js/main.8b5450b6.js",
+    "static/media/mystro-background.jpg": "/static/media/mystro-background.4944b5161dec8e75f7a6.jpg",
+    "index.html": "/index.html",
+    "main.3adbd8a1.css.map": "/static/css/main.3adbd8a1.css.map",
+    "main.8b5450b6.js.map": "/static/js/main.8b5450b6.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.3adbd8a1.css",
+    "static/js/main.8b5450b6.js"
+  ]
+}

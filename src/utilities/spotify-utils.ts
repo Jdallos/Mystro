@@ -20,6 +20,7 @@ namespace SpotifyUtilities {
       data: 'grant_type=client_credentials',
       method: 'POST'
       })
+
       dispatch(setToken(response.data.access_token));
     } catch (error) {
       console.log("Error getting token:", error);
