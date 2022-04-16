@@ -48,7 +48,7 @@ const DiscoverScreen: React.FC = () => {
 
   return (
     <div className="DiscoverScreen">
-      <Link className="DiscoverScreen-back" to="/">Back to search</Link>
+      <Link className="DiscoverScreen-back" to="/">Back to homepage</Link>
       <h1>{details.track.name}</h1>
       <button onClick={()=> dispatch(setPlaying(details.track.external_urls.spotify))}>Listen</button>
       {isSaved.length ? <button onClick={handleRemove}>Remove</button> : <button onClick={handleSave}>Save</button> }

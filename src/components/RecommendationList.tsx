@@ -7,7 +7,7 @@ import { Recommendations, ArtistSearch } from "../types/schema";
 
 interface Props {
   recommendations: Recommendations;
-  searchItem?: ArtistSearch;
+  searchItem: ArtistSearch| undefined;
 }
 
 /**
@@ -24,13 +24,14 @@ const RecommendationsList: React.FC<Props> = ({
 }) => {
 
   const recData = recommendations.tracks;
-
   return (
     <div>
       {/* Prevents warning/ crash if search is invalid */}
-      {searchItem ? (
+      {searchItem !== undefined  ? (
         <div>
           <h3>Recommendations for {searchItem.name} fans</h3>
+          {recommendations.tracks.length === 0 &&
+          <h4>Sorry, spotify doesn't have enough data on this artist to provide recommendations- keep listening!</h4>}
           <section>
             <Container
               fixed
@@ -46,7 +47,7 @@ const RecommendationsList: React.FC<Props> = ({
           </section>
         </div>
       ) : (
-        <h3>Something went wrong, search again</h3>
+        <h3>Something went wrong, try a different search</h3>
       )}
     </div>
   );
