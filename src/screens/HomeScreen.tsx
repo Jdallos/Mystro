@@ -7,7 +7,12 @@ import SpotifyUtilities from "../utilities/spotify-utils";
 import RecommendationsList from "../components/RecommendationList";
 import Form from "../components/Form";
 import { setToken, setDetails } from "../redux/mystroSlice";
-import { Recommendations, Discover, ArtistSearch, ReduxState } from "../types/schema";
+import {
+  Recommendations,
+  Discover,
+  ArtistSearch,
+  ReduxState,
+} from "../types/schema";
 import "../styles/HomeScreen.css";
 
 /**
@@ -17,13 +22,16 @@ import "../styles/HomeScreen.css";
  */
 const HomeScreen: React.FC = () => {
   const [search, setSearch] = useState<string>("");
-  const [searchId, setSearchId] = useState<ArtistSearch>();
+  const [searchId, setSearchId] = useState<ArtistSearch[]>();
   const [recommendations, setRecommendations] = useState<Recommendations>();
   const [limit, setLimit] = useState<string>("20");
   const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [searchError, setSearchError] = useState<boolean>(false);
 
   // Redux
-  let details: Discover|undefined = useSelector((state: ReduxState) => state.mystro.details);
+  let details: Discover | undefined = useSelector(
+    (state: ReduxState) => state.mystro.details
+  );
   const token: string = useSelector((state: ReduxState) => state.mystro.token);
   const dispatch = useDispatch();
 
@@ -45,11 +53,12 @@ const HomeScreen: React.FC = () => {
     if (searchId) {
       const waitRecs = async () => {
         await SpotifyUtilities.getRecommendations(
-          searchId,
+          searchId[0],
           setRecommendations,
           token,
           limit
         );
+        // This is here to keep the loading animation inplace until RecommendationList rendering
         setIsLoading(false);
       };
       waitRecs();
@@ -74,7 +83,30 @@ const HomeScreen: React.FC = () => {
   const searchInputId = (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    SpotifyUtilities.getSearchId(search, setSearchId, token);
+    SpotifyUtilities.getSearchId(
+      search,
+      setSearchId,
+      token,
+      setIsLoading,
+      setSearchError
+    );
+  };
+
+  /**
+   * Change the seed artist for recommendations
+   */
+  const changeRecommendationSeed = (
+    e: React.ChangeEvent<HTMLSelectElement>
+  ) => {
+    setIsLoading(true);
+    const selected = searchId?.filter((seed) => e.target.value === seed.name);
+    if (selected && searchId) {
+      const newArr: ArtistSearch[] = [
+        selected[0],
+        ...searchId.filter((seed) => seed.name !== e.target.value),
+      ];
+      setSearchId(newArr);
+    }
   };
 
   return (
@@ -88,10 +120,26 @@ const HomeScreen: React.FC = () => {
       {isLoading ? (
         <LinearProgress color="success" />
       ) : recommendations ? (
-        <RecommendationsList
-          searchItem={searchId}
-          recommendations={recommendations}
-        />
+        <>
+          {/* Could move this into form so it doen't dissapear on refresh? and merge with the h1 there */}
+          <div id="refineSelect">
+            <label htmlFor="changeSeed">Refine search:</label>
+            <select
+              id="changeSeed"
+              onChange={(e) => changeRecommendationSeed(e)}
+            >
+              {searchId?.map((seed) => (
+                <option key={`seeds${seed.id}`}>{seed.name}</option>
+              ))}
+            </select>
+          </div>
+          <RecommendationsList
+            searchItem={searchId ? searchId[0] : undefined}
+            recommendations={recommendations}
+          />
+        </>
+      ) : searchError ? (
+        <h4>Something went wrong, try a different search</h4>
       ) : (
         <h4>Try a search...</h4>
       )}

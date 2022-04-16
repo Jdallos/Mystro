@@ -35,7 +35,7 @@ namespace SpotifyUtilities {
  * @param setSearchId React dispatch function
  * @param token API access token
  */
-  export const getSearchId = async (search: string, setSearchId: React.Dispatch<React.SetStateAction<ArtistSearch | undefined>>, token: string ) =>{
+  export const getSearchId = async (search: string, setSearchId: React.Dispatch<React.SetStateAction<ArtistSearch[] | undefined>>, token: string, setIsLoading: React.Dispatch<React.SetStateAction<boolean>>, setSearchError: React.Dispatch<React.SetStateAction<boolean>>) =>{
     try {
       const response = await axios(`https://api.spotify.com/v1/search?q=${search}&type=artist`, {
         method: 'GET',
@@ -43,9 +43,17 @@ namespace SpotifyUtilities {
           'Authorization': 'Bearer ' + token
         }
       })
-      setSearchId(response.data.artists.items[0]);
+      if (response.data.artists.items.length){
+        setSearchError(true);
+        setSearchId(response.data.artists.items);
+      } else{
+        throw new Error();
+      }
     } catch (e){
       console.log("error getting artist Id", e);
+      setSearchId(undefined);
+      setSearchError(true);
+      setIsLoading(false);
     }
   };
 
