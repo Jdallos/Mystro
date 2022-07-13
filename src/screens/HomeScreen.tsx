@@ -14,6 +14,7 @@ import {
   ReduxState,
 } from "../types/schema";
 import "../styles/HomeScreen.css";
+import RecommendationSettings from "../components/RecommendationSettings";
 
 /**
  * Homescreen for Mystro
@@ -121,18 +122,13 @@ const HomeScreen: React.FC = () => {
         <LinearProgress color="success" />
       ) : recommendations ? (
         <>
-          {/* Could move this into form so it doen't dissapear on refresh? and merge with the h1 there */}
-          <div id="refineSelect">
-            <label htmlFor="changeSeed">Refine search:</label>
-            <select
-              id="changeSeed"
-              onChange={(e) => changeRecommendationSeed(e)}
-            >
-              {searchId?.map((seed) => (
-                <option key={`seeds${seed.id}`}>{seed.name}</option>
-              ))}
-            </select>
-          </div>
+          { 
+            searchId &&
+            <RecommendationSettings 
+              searchId={ searchId }
+              changeRecommendationSeed={ changeRecommendationSeed }
+            />
+          }
           <RecommendationsList
             searchItem={searchId ? searchId[0] : undefined}
             recommendations={recommendations}

@@ -3,7 +3,9 @@ import Recommendation from "./Recommendation";
 import Container from "@mui/material/Container";
 import Grid from "@mui/material/Grid";
 
-import { Recommendations, ArtistSearch } from "../types/schema";
+import { Recommendations, ArtistSearch, ReduxState } from "../types/schema";
+import { sortSeeds } from "../utilities/generic-utils";
+import { useSelector } from "react-redux";
 
 interface Props {
   recommendations: Recommendations;
@@ -23,7 +25,14 @@ const RecommendationsList: React.FC<Props> = ({
   searchItem,
 }) => {
 
+  const state = useSelector(
+    (state: ReduxState) => state
+  );
+
   const recData = recommendations.tracks;
+
+  const sortedData = sortSeeds(state, recData);
+
   return (
     <div>
       {/* Prevents warning/ crash if search is invalid */}
@@ -39,7 +48,7 @@ const RecommendationsList: React.FC<Props> = ({
               sx={{ marginY: 5 }}
             >
               <Grid container spacing={3}>
-                {recData.map((rec) => (
+                {sortedData.map((rec) => (
                   <Recommendation recommendation={rec} key={rec.id} />
                 ))}
               </Grid>

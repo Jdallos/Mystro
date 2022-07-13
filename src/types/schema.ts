@@ -25,6 +25,11 @@ interface ReduxState {
     playing: string;
     token: string;
     details: Discover;
+  },
+  sort: {
+    byYear: { ascend : boolean, descend: boolean };
+    byPopularity: { ascend : boolean, descend: boolean };
+    byArtist: { ascend : boolean, descend: boolean };
   }
 }
 
