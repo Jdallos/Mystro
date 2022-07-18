@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 import SpotifyUtilities from "../utilities/spotify-utils";
 import RecommendationsList from "../components/RecommendationList";
 import Form from "../components/Form";
-import { setToken, setDetails } from "../redux/mystroSlice";
+import { setToken, setDetails, storePrevious, setGoBack } from "../redux/mystroSlice";
 import {
   Recommendations,
   Discover,
@@ -33,7 +33,7 @@ const HomeScreen: React.FC = () => {
   let details: Discover | undefined = useSelector(
     (state: ReduxState) => state.mystro.details
   );
-  const token: string = useSelector((state: ReduxState) => state.mystro.token);
+  const { token, goBack, previousSearch } = useSelector((state: ReduxState) => state.mystro);
   const dispatch = useDispatch();
 
   /**
@@ -51,7 +51,7 @@ const HomeScreen: React.FC = () => {
    * Get recommendations API call and update loading state
    */
   useEffect(() => {
-    if (searchId) {
+    if (searchId && previousSearch.previousRecommendations.length === 0) {
       const waitRecs = async () => {
         await SpotifyUtilities.getRecommendations(
           searchId[0],
@@ -64,6 +64,8 @@ const HomeScreen: React.FC = () => {
       };
       waitRecs();
     }
+    // HAVING TO DO THIS IS AN INDICATOR IT SHOULD PROBABLY BE REFACTORED IN SOME WAY...
+    // eslint-disable-next-line
   }, [token, searchId, limit]);
 
   let navigate = useNavigate();
@@ -73,16 +75,40 @@ const HomeScreen: React.FC = () => {
    */
   useEffect(() => {
     if (details?.artist?.id && details?.album?.id && details?.track?.id) {
+      dispatch(storePrevious({ recommendations: recommendations, searchId: searchId }));
       navigate(`/discover/${details.track.id}`, { state: { details } });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [details]);
 
   /**
+   * Set recommendations based on previous recommendations when returning from the discovery screen
+   */
+  useEffect(() => {
+    if (goBack) {
+      // Currently recommendations is set to any to pass into set- change and move in to redux state?
+      setIsLoading(true);
+      setRecommendations(previousSearch.previousRecommendations);
+      setSearchId(previousSearch.previousSearchId);
+      dispatch(setGoBack());
+    }
+  },[goBack, previousSearch, dispatch]);
+
+  /**
+   * Stops the loading spinner when previous recommendations are restored after returning from discovery page
+   */
+  useEffect(() => {
+    if (recommendations) {
+      setIsLoading(false);
+    }
+  }, [recommendations])
+
+  /**
    * Get form search Id from spotify API
    */
   const searchInputId = (e: React.FormEvent) => {
     e.preventDefault();
+    dispatch(storePrevious({ recommendations: [], searchId: undefined }));
     setIsLoading(true);
     SpotifyUtilities.getSearchId(
       search,

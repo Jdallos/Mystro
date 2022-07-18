@@ -36,7 +36,7 @@ const RecommendationsList: React.FC<Props> = ({
   return (
     <div>
       {/* Prevents warning/ crash if search is invalid */}
-      {searchItem !== undefined  ? (
+      {searchItem !== undefined ? (
         <div>
           <h3>Recommendations for {searchItem.name} fans</h3>
           {recommendations.tracks.length === 0 &&

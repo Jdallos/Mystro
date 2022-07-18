@@ -13,6 +13,11 @@ const mystroSlice = createSlice({
     playing: "",
     token: "",
     details: {},
+    goBack: false,
+    previousSearch: {
+      previousRecommendations: [],
+      previousSearchId:undefined,
+    },
     // If wanted to serialize functions to store in redux.
     // functions: {
     //   getInfo: getInfoSerialized,
@@ -45,9 +50,18 @@ const mystroSlice = createSlice({
     setToken: (state, action) => {
       state.token = action.payload;
     },
+    setGoBack: (state) => {
+      state.goBack = !state.goBack;
+    },
+    storePrevious: (state, action) => {
+      state.previousSearch.previousRecommendations = action.payload.recommendations;
+      if (action.payload.searchId) {
+        state.previousSearch.previousSearchId = action.payload.searchId;
+      }
+    }
   }
 });
 
-export const { saveRecommendation, removeRecommendation, setPlaying, setDetails, setToken } = mystroSlice.actions;
+export const { saveRecommendation, removeRecommendation, setPlaying, setDetails, setToken, setGoBack, storePrevious } = mystroSlice.actions;
 
 export default mystroSlice.reducer;

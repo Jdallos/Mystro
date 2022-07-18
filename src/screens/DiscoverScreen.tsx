@@ -2,7 +2,7 @@ import React, { useLayoutEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 
-import { saveRecommendation, removeRecommendation, setPlaying } from "../redux/mystroSlice";
+import { saveRecommendation, removeRecommendation, setPlaying, setGoBack } from "../redux/mystroSlice";
 import { Discover, TrackObjectFull, ReduxState } from "../types/schema";
 import "../styles/DiscoverScreen.css";
 
@@ -25,7 +25,7 @@ const DiscoverScreen: React.FC = () => {
   //React Router
   const location: any = useLocation();
   const details: Discover = location.state.details;
-
+  
   let genreString = "";
   for (let i = 0; i < details.artist.genres.length; i++) {
     if (i !== details.artist.genres.length - 1) {
@@ -48,7 +48,15 @@ const DiscoverScreen: React.FC = () => {
 
   return (
     <div className="DiscoverScreen">
-      <Link className="DiscoverScreen-back" to="/">Back to homepage</Link>
+      <Link 
+        className="DiscoverScreen-back" 
+        to="/"
+        onClick={() => {
+          dispatch(setGoBack());
+        }}
+      >
+        Back to homepage
+      </Link>
       <h1>{details.track.name}</h1>
       <button onClick={()=> dispatch(setPlaying(details.track.external_urls.spotify))}>Listen</button>
       {isSaved.length ? <button onClick={handleRemove}>Remove</button> : <button onClick={handleSave}>Save</button> }

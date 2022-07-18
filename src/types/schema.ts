@@ -25,6 +25,11 @@ interface ReduxState {
     playing: string;
     token: string;
     details: Discover;
+    goBack: boolean;
+    previousSearch: {
+      previousRecommendations: any;
+      previousSearchId: any;
+    },
   },
   sort: {
     byYear: { ascend : boolean, descend: boolean };

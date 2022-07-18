@@ -39,20 +39,21 @@ export const getDiscoveryInfo = (
  */
 export const sortSeeds = (
   state: ReduxState,
-  recData: SpotifyApi.TrackObjectFull[]
+  recData: SpotifyApi.TrackObjectFull[],
 ): SpotifyApi.TrackObjectFull[] => {
   let sortedRecommendations = recData;
 
   const { byYear, byPopularity, byArtist } = state.sort;
 
   if (byYear.ascend) {
-    sortedRecommendations = sortedRecommendations.sort(
+    // Note the slice to create a new array...
+    sortedRecommendations = sortedRecommendations.slice().sort(
       (a, b) =>
         Number(a.album.release_date.split("-")[0]) -
         Number(b.album.release_date.split("-")[0])
     );
   } else if (byYear.descend) {
-    sortedRecommendations = sortedRecommendations.sort(
+    sortedRecommendations = sortedRecommendations.slice().sort(
       (a, b) =>
         Number(b.album.release_date.split("-")[0]) -
         Number(a.album.release_date.split("-")[0])
@@ -60,22 +61,22 @@ export const sortSeeds = (
   }
 
   if (byPopularity.ascend) {
-    sortedRecommendations = sortedRecommendations.sort(
+    sortedRecommendations = sortedRecommendations.slice().sort(
       (a, b) => a.popularity - b.popularity
     );
   } else if (byPopularity.descend) {
-    sortedRecommendations = sortedRecommendations.sort(
+    sortedRecommendations = sortedRecommendations.slice().sort(
       (a, b) => b.popularity - a.popularity
     );
   }
   if (byArtist.ascend) {
-    sortedRecommendations = sortedRecommendations.sort((a, b) => {
+    sortedRecommendations = sortedRecommendations.slice().sort((a, b) => {
       return a.artists[0].name
         .normalize()
         .localeCompare(b.artists[0].name.normalize());
     });
   } else if (byArtist.descend) {
-    sortedRecommendations = sortedRecommendations.sort((a, b) => {
+    sortedRecommendations = sortedRecommendations.slice().sort((a, b) => {
       return b.artists[0].name
         .normalize()
         .localeCompare(a.artists[0].name.normalize());
