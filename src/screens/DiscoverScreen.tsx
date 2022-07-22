@@ -25,7 +25,7 @@ const DiscoverScreen: React.FC = () => {
   //React Router
   const location: any = useLocation();
   const details: Discover = location.state.details;
-  
+
   let genreString = "";
   for (let i = 0; i < details.artist.genres.length; i++) {
     if (i !== details.artist.genres.length - 1) {
@@ -55,10 +55,10 @@ const DiscoverScreen: React.FC = () => {
           dispatch(setGoBack());
         }}
       >
-        Back to homepage
+        Back to previous search
       </Link>
       <h1>{details.track.name}</h1>
-      <button onClick={()=> dispatch(setPlaying(details.track.external_urls.spotify))}>Listen</button>
+      <button onClick={()=> dispatch(setPlaying(details.recommendation))}>Listen</button>
       {isSaved.length ? <button onClick={handleRemove}>Remove</button> : <button onClick={handleSave}>Save</button> }
       <h2>Track notes</h2>
       <p>

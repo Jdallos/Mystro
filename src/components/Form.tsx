@@ -28,6 +28,7 @@ const Form: React.FC<Props> = ({searchInputId, search, setSearch, setLimit}) => 
         placeholder="Enter artist/ band name..."
         onChange={(e) => setSearch(e.target.value)}
       />
+      <button className="searchButton">Go</button>
       <label htmlFor="limit">Number of recommendations:</label>
       <select name="limit" defaultValue="20" id="limit" onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setLimit(e.target.value)}>
         <option value="20">20</option>

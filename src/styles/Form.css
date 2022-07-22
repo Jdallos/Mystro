@@ -35,3 +35,20 @@
 .Form label{
   display:block;
 }
+
+.Form .searchButton {
+  padding: 0.8rem 0.8rem;
+  margin: 1rem;
+  border: 3px solid rgb(255, 224, 194);
+  border-radius: 100px;
+  background-color:mediumseagreen;
+  font-size: 1.2em;
+  font-weight:900;
+  box-shadow: 1px 1px 2px black;
+}
+
+.Form .searchButton:hover {
+  border: 3px solid peru;
+  outline: none;
+  box-shadow: 1px 1px 5px black;
+}

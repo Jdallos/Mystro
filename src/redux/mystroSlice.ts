@@ -3,14 +3,26 @@ import { createSlice } from "@reduxjs/toolkit";
 // import { getInfoSerialized } from "../redux/serializedFunctions";
 import { TrackObjectFull } from "../types/schema";
 
+const getLocalSaved = (): TrackObjectFull[] => {
+  const JSONSaved = localStorage.getItem("mystro");
+  console.log(JSONSaved);
+  if (JSONSaved) return JSON.parse(JSONSaved);
+  return [];
+};
+const saved = getLocalSaved();
+
 /**
  * Redux Slice
  */
 const mystroSlice = createSlice({
   name: "mystro",
   initialState: {
-    saved: [],
-    playing: "",
+    saved: saved,
+    playing: {
+      external_urls: {
+        spotify: ""
+      },
+    },
     token: "",
     details: {},
     goBack: false,
@@ -29,12 +41,18 @@ const mystroSlice = createSlice({
         ...action.payload
       };
       state.saved.push(newRecommendation);
+      // Could put in own function...
+      const localSave = JSON.stringify(state.saved);
+      localStorage.setItem("mystro", localSave);
     },
     removeRecommendation: (state, action) => {
       const newSaveState = state.saved.filter(
         (rec: TrackObjectFull) => rec.id !== action.payload.id
       );
       state.saved = newSaveState;
+      // Could put in own function...
+      const localSave = JSON.stringify(state.saved);
+      localStorage.setItem("mystro", localSave);
     },
     setPlaying: (state, action) => {
       state.playing = action.payload;

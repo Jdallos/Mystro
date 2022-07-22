@@ -22,7 +22,7 @@ interface Discover {
 interface ReduxState {
   mystro: {
     saved: TrackObjectFull[];
-    playing: string;
+    playing: TrackObjectFull;
     token: string;
     details: Discover;
     goBack: boolean;

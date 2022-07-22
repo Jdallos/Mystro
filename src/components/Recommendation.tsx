@@ -44,14 +44,6 @@ const Recommendation: React.FC<Props> = ({
     getDiscoveryInfo(artistId, albumId, trackId, recommendation, dispatch, token);
   };
 
-  const handleSave = () => {
-    dispatch(saveRecommendation({ ...recommendation }));
-  };
-
-  const handleRemove = () => {
-    dispatch(removeRecommendation({ id: recommendation.id }));
-  };
-
   return (
     <Grid item xs={10} sm={6} md={4} lg={3} xl={3} className="Recommendation">
       <h3>
@@ -82,12 +74,12 @@ const Recommendation: React.FC<Props> = ({
       <div>
         <button onClick={handleDiscover}>Discover</button>
         {isSaved.length ? (
-          <button onClick={handleRemove}>Remove</button>
+          <button onClick={() => dispatch(removeRecommendation({ id: recommendation.id }))}>Remove</button>
         ) : (
-          <button onClick={handleSave}>Save</button>
+          <button onClick={() => dispatch(saveRecommendation({ ...recommendation }))}>Save</button>
         )}
         <button
-          onClick={() => dispatch(setPlaying(recommendation.external_urls.spotify))}
+          onClick={() => dispatch(setPlaying(recommendation))}
         >
           Listen
         </button>

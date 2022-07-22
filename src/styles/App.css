@@ -25,11 +25,14 @@
   color: mediumseagreen;
 }
 
-#musicPlayer{
+#Player {
   position:sticky;
   top:0;
-  width: 50%;
   z-index: 1;
+}
+
+#musicPlayer{
+  width: 50%;
   margin: auto;
 }
 

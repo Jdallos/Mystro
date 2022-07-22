@@ -1,39 +1,23 @@
 import React from "react";
 import { Routes, Route, Link } from "react-router-dom";
-import { useSelector } from "react-redux";
+import Player from "./components/Player";
 
 import SavedList from "./components/SavedList";
 import DiscoverScreen from "./screens/DiscoverScreen";
 import HomeScreen from "./screens/HomeScreen";
-import { ReduxState } from "./types/schema";
 import "./styles/App.css";
 
 /**
- *
  * Mystro App
  *
  * @returns Mystro App
  */
 const App: React.FC = () => {
 
-  const playing: string = useSelector((state: ReduxState) => state.mystro.playing);
-
   return (
     <div className="App">
       <h1><Link className="App-header" to="/">Mystro</Link></h1>
-      {playing && <iframe
-        id="musicPlayer"
-        style={{ borderRadius: "12px" }}
-        src={`https://open.spotify.com/embed/track/${playing.slice(
-          31
-        )}?utm_source=generator`}
-        width="100%"
-        height="80"
-        frameBorder="0"
-        allowFullScreen
-        title="musicPlayer"
-        allow="autoplay; clipboard-write; encrypted-media; picture-in-picture"
-      ></iframe>}
+      <Player />
       <SavedList />
       <Routes>
         <Route
