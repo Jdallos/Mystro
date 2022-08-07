@@ -1,0 +1,13 @@
+.HomeScreen{
+  text-align: center;
+}
+
+#refineSelect select{
+  padding: 0.3rem 0.2rem;
+  border-radius: 100px;
+  border: 2px solid mediumseagreen;
+  background-color:rgb(255, 224, 194);
+  font-size: 0.8em;
+  box-shadow: 1px 1px 2px black;
+  margin: 0.5rem;
+}

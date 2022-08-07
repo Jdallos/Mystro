@@ -1,0 +1,30 @@
+.Recommendation {
+  border: 3px solid mediumseagreen;
+  padding: 0 !important;
+  background-color: rgba(255, 255, 255, 0.63);
+  margin-left: auto;
+  margin-right: auto;
+  font-size: 1.2em;
+  font-weight: 700;
+  color:black;
+  text-shadow: 1px 1px 2px peru;
+}
+
+.Recommendation img {
+  width: 95%;
+  margin:0.1rem;
+}
+
+.Recommendation-category{
+  color:peru;
+  text-shadow: 1px 1px 2px black;
+}
+
+.Recommendation button{
+  padding: 0.6rem 0.8rem;
+  margin: 0.1rem;
+}
+
+.Recommendation button:hover{
+  border: 1px solid peru;
+}
